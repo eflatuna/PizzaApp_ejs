@@ -35,6 +35,26 @@
 									|| '' %}"
 									/>
 								</td>
+								<td>Toppings</td>
+								<td>
+									{% toppings.forEach(topping => { %}
+									<div class="form-check">
+										<input class="form-check-input"
+										type="checkbox" name="toppingIds[]"
+										value="{%= topping.id %}"
+										id="flexCheckDefault" {%=
+										pizza?.toppingIds.some(pizzaTop =>
+										pizzaTop.id == topping.id) ? 'checked' :
+										'' %} />
+										<label
+											class="form-check-label"
+											for="flexCheckDefault"
+										>
+											{%= topping.name %}
+										</label>
+									</div>
+									{% }) %}
+								</td>
 							</tr>
 						</tbody>
 					</table>
