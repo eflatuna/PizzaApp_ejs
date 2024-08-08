@@ -18,8 +18,7 @@
 										name="name"
 										required
 										class="form-control"
-										value="{%= pizza?.name
-									|| '' %}"
+										value="{%= pizza?.name || '' %}"
 									/>
 								</td>
 							</tr>
@@ -31,10 +30,11 @@
 										name="price"
 										required
 										class="form-control"
-										value="{%= pizza?.price
-									|| '' %}"
+										value="{%= pizza?.price || '' %}"
 									/>
 								</td>
+							</tr>
+							<tr>
 								<td>Toppings</td>
 								<td>
 									{% toppings.forEach(topping => { %}
@@ -55,6 +55,8 @@
 									</div>
 									{% }) %}
 								</td>
+							</tr>
+							<tr>
 								<td>Pizza Images</td>
 								<td>
 									<span>Old Images</span>
@@ -95,5 +97,27 @@
 	</div>
 </div>
 <!-- content end -->
+<script>
+	//https://developer.mozilla.org/en-US/docs/Web/API/FileReader
+	function previewImage(input) {
+		const imageGallery = document.querySelector("#imageGallery");
+		imageGallery.innerHTML = "";
+		if (input.files && input.files.length > 0) {
+			console.log(input.files);
+			Array.from(input.files).forEach((item) => {
+				const reader = new FileReader();
+				reader.onload = function (e) {
+					const img = document.createElement("img");
+					img.src = e.target.result;
+					(img.width = 200),
+						(img.height = 200),
+						img.classList.add("m-2");
+					imageGallery.appendChild(img);
+				};
+				reader.readAsDataURL(item);
+			});
+		}
+	}
+</script>
 
 {%- include('partials/footer') -%}
