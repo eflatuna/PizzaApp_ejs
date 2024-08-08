@@ -7,7 +7,7 @@
 			<div class="card-body">
 				<h2>{%= (pizza ? 'Update' : 'Create') %}</h2>
 				<hr />
-				<form action="" method="POST">
+				<form action="" method="POST" enctype="multipart/form-data">
 					<table class="table">
 						<tbody>
 							<tr>
@@ -54,6 +54,35 @@
 										</label>
 									</div>
 									{% }) %}
+								</td>
+								<td>Pizza Images</td>
+								<td>
+									<span>Old Images</span>
+									{% if(pizza?.images.length) { %}
+									<div>
+										{% pizza.images.forEach(image => { %}
+										<img
+											src="{%= image %}"
+											class="m-2"
+											width="200px"
+											height="200px"
+											alt=""
+										/>
+										{% }) %}
+									</div>
+									{% } %}
+									<hr />
+									<div id="imageGallery"></div>
+									<div class="mb-3">
+										<input
+											class="form-control"
+											type="file"
+											id="formFileMultiple"
+											name="images"
+											onchange="previewImage(this)"
+											multiple
+										/>
+									</div>
 								</td>
 							</tr>
 						</tbody>

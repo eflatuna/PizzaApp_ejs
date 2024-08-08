@@ -32,6 +32,7 @@ module.exports = {
 		if (req.method == "POST") {
 			if (req.files) {
 				const images = [];
+				console.log(req.files);
 				req.files.forEach((image) =>
 					images.push("/uploads/" + image.filename)
 				); //* upload ile gelen resimlerin ismini yakaladık
