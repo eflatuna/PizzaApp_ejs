@@ -3,13 +3,56 @@
 <!-- content start -->
 <div class="pb-5">
 	<div class="mx-auto d-flex justify-content-center align-items-center pt-5">
-		<div class="card">
+		<div
+			class="card"
+			style="max-width: 30%; width: 400px; overflow: hidden"
+		>
 			{% if (pizza.images?.length) { %}
-			<img
-				src="{%= pizza.images[0] %}"
-				class="card-img-top"
-				style="width: 400px; height: 300px"
-			/>
+			<div
+				id="carouselExample"
+				class="carousel slide"
+				style="width: 100%"
+			>
+				<div class="carousel-inner" style="width: 100%">
+					{% pizza.images.forEach((image,index) => { %}
+					<div
+						class="carousel-item {%= index ? '' : 'active' %}"
+						style="height: 300px"
+					>
+						<img
+							src="{%= image %}"
+							class="d-block w-100 h-100"
+							alt="..."
+							style="object-fit: contain"
+						/>
+					</div>
+					{% }) %}
+				</div>
+				<button
+					class="carousel-control-prev"
+					type="button"
+					data-bs-target="#carouselExample"
+					data-bs-slide="prev"
+				>
+					<span
+						class="carousel-control-prev-icon"
+						aria-hidden="true"
+					></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button
+					class="carousel-control-next"
+					type="button"
+					data-bs-target="#carouselExample"
+					data-bs-slide="next"
+				>
+					<span
+						class="carousel-control-next-icon"
+						aria-hidden="true"
+					></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+			</div>
 			{% } %}
 			<!-- admin-area-start -->
 			{% if (user?.isAdmin) { %}
@@ -38,8 +81,7 @@
 							{% } %}
 						</ul>
 					</li>
-
-					<li>Price: <strong> {%= pizza.price %}$</strong></li>
+					<li>Price: <strong> {%= pizza.price %} €</strong></li>
 				</ul>
 			</div>
 		</div>
