@@ -6,6 +6,7 @@
 
 const Pizza = require("../../models/pizza");
 const Topping = require("../../models/topping");
+const fs = require("node:fs");
 
 module.exports = {
 	list: async (req, res) => {
@@ -32,7 +33,7 @@ module.exports = {
 		if (req.method == "POST") {
 			if (req.files) {
 				const images = [];
-				// console.log(req.files);
+				console.log(req.files);
 				req.files.forEach((image) =>
 					images.push("/uploads/" + image.filename)
 				); //* upload ile gelen resimlerin ismini yakaladık
@@ -43,6 +44,7 @@ module.exports = {
 						: [req.body.images, ...images]
 					: images; //* aynı anda hem string hem de upload olarak gönderebilsin
 			}
+			console.log(req.body);
 			const data = await Pizza.create(req.body);
 
 			// res.status(201).send({
@@ -78,7 +80,11 @@ module.exports = {
 
 	update: async (req, res) => {
 		if (req.method == "POST") {
-			const images = [];
+			const pizza = await Pizza.findOne(
+				{ _id: req.params.id },
+				{ _id: 0, images: 1 }
+			);
+			const images = pizza.images || [];
 			if (req.files) {
 				req.files.forEach(
 					(image) => images.push("/uploads/" + image.filename) //* önceki resimlerin üzerine ekledik.
@@ -123,7 +129,8 @@ module.exports = {
 	},
 
 	delete: async (req, res) => {
-		const data = await Pizza.deleteOne({ _id: req.params.id });
+		// const data = await Pizza.deleteOne({ _id: req.params.id });
+		const data = await Pizza.findOneAndDelete({ _id: req.params.id });
 		//* silinen pizzanın resmininde durmasına gerek yok diyerek o resmi kayıtlarımızdan sildik.
 		if (data?.images) {
 			data?.images.forEach((image) => {
