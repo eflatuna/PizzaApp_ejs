@@ -1,0 +1,50 @@
+{%- include('partials/header') -%}
+
+<!-- content start -->
+<div class="pb-5">
+	<div class="mx-auto d-flex justify-content-center align-items-center pt-5">
+		<div class="card">
+			{% if (pizza.images?.length) { %}
+			<img
+				src="{%= pizza.images[0] %}"
+				class="card-img-top"
+				style="width: 400px; height: 300px"
+			/>
+			{% } %}
+			<!-- admin-area-start -->
+			{% if (user?.isAdmin) { %}
+			<div class="col-md-3 d-flex align-items-center rounded p-2">
+				<a href="/pizzas/{%= pizza.id %}/update"
+					><button class="btn btn-sm btn-warning me-1">
+						Update
+					</button></a
+				>
+				<a href="/pizzas/{%= pizza.id %}/delete"
+					><button class="btn btn-sm btn-danger me-1">
+						Delete
+					</button></a
+				>
+			</div>
+			{% } %}
+			<!-- admin-area-end -->
+			<div class="card-body">
+				<h5 class="card-title">{%= pizza.name %}</h5>
+				<ul class="card-text">
+					<li>
+						Toppings:
+						<ul>
+							{% for (let topping of pizza.toppingIds) { %}
+							<li>{%= topping.name %}</li>
+							{% } %}
+						</ul>
+					</li>
+
+					<li>Price: <strong> {%= pizza.price %}$</strong></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- content end -->
+
+{%- include('partials/footer') -%}
